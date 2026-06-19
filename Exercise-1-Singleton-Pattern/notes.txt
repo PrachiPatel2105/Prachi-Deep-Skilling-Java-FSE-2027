@@ -1,0 +1,54 @@
+EXERCISE 1: SINGLETON PATTERN - PERSONAL NOTES
+===============================================
+
+Date Started: [Your Date]
+Date Completed: [Your Date]
+
+KEY CONCEPTS LEARNED:
+1. Singleton Pattern - ensures only ONE instance of a class
+2. Private constructor - prevents direct instantiation with 'new'
+3. Static method getInstance() - the only way to get the instance
+4. Static variable - holds the single instance
+5. Lazy initialization - instance created on first request
+
+WHAT I DID:
+Step 1: Created Logger.java with singleton pattern
+Step 2: Created Main.java to test the implementation
+Step 3: Compiled both files using javac
+Step 4: Ran the program and verified singleton works
+Step 5: All three logger references had same object ID
+
+KEY LEARNINGS:
+- Singleton is useful for resources that should have only one instance
+- Real-world examples: Logging, Database connections, Config managers
+- Need to be careful about thread safety in multi-threaded environments
+- Lazy initialization saves memory if instance never used
+
+CHALLENGES FACED:
+[What was difficult?]
+
+SOLUTIONS FOUND:
+[How did I solve them?]
+
+CODE UNDERSTANDING:
+- Private constructor prevents: new Logger()
+- getInstance() checks if instance is null, creates if needed
+- Returns same instance every time it's called
+
+TESTING VERIFICATION:
+- logger1 == logger2 returned true ✓
+- logger3 == logger1 returned true ✓
+- All had same object ID ✓
+- Singleton pattern works correctly ✓
+
+CONFIDENCE LEVEL: [Rate 1-10]
+
+NEXT STEPS:
+- Review Exercise 2: Factory Method Pattern
+- Practice more singleton patterns
+- Understand thread-safe singleton implementations
+
+RESOURCES USED:
+- Handbook section on Design Patterns
+- Java documentation
+- My class notes
