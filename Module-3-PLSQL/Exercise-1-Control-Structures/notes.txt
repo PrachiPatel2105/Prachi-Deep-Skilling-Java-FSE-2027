@@ -1,0 +1,266 @@
+EXERCISE 1: PL/SQL CONTROL STRUCTURES - PERSONAL NOTES
+========================================================
+
+Date Started: [Your Date]
+Date Completed: [Your Date]
+
+KEY CONCEPTS LEARNED:
+1. PL/SQL - Oracle's procedural SQL extension
+2. Control structures - IF, LOOP, CURSOR
+3. Variables and data types in PL/SQL
+4. Loops (FOR, WHILE, LOOP/EXIT)
+5. Cursors - fetching and processing rows
+6. UPDATE statements in loops
+7. DBMS_OUTPUT for displaying results
+8. Transaction control (COMMIT, ROLLBACK)
+9. Exception handling
+10. Business logic implementation
+
+PL/SQL BASICS:
+- Procedural Language + SQL
+- Can use logic like variables, loops, conditions
+- Runs on Oracle database server
+- More efficient than multiple SQL queries
+
+CONTROL STRUCTURES LEARNED:
+
+1. IF / ELSE:
+   - IF condition THEN ... END IF;
+   - ELSIF for multiple conditions
+   - ELSE for default case
+   - Useful for checking age, balance, etc.
+
+2. FOR LOOP:
+   - FOR variable IN start..end LOOP ... END LOOP;
+   - FOR record IN (cursor) LOOP ... END LOOP;
+   - Easy to iterate through records
+   - Most common in PL/SQL
+
+3. WHILE LOOP:
+   - WHILE condition LOOP ... END LOOP;
+   - Repeats while condition is true
+   - Less common than FOR loop
+
+4. LOOP / EXIT:
+   - LOOP ... EXIT WHEN ... END LOOP;
+   - Infinite loop with exit condition
+   - Used when exit condition complex
+
+5. CURSOR:
+   - Selects rows from table
+   - Loop through each row
+   - Access columns from each row
+
+SCENARIO 1 - AGE DISCOUNT:
+Purpose: Apply 1% discount to customers > 60
+Logic:
+- FOR each customer:
+  - IF age > 60:
+    - FOR each loan of customer:
+      - UPDATE interest_rate - 1%
+
+Key Concepts:
+- Nested loops (customer → loans)
+- IF statement
+- UPDATE in loop
+- COMMIT after all updates
+
+Expected Results:
+- 5 customers > 60 identified
+- 8 loans updated
+- Interest rates reduced by 1%
+
+SCENARIO 2 - VIP PROMOTION:
+Purpose: Set IsVIP = 'Y' for balance > $10,000
+Logic:
+- FOR each customer:
+  - IF balance > 10000:
+    - IF already VIP: print "Already VIP"
+    - ELSE: UPDATE IsVIP = 'Y'
+
+Key Concepts:
+- Simple loop
+- IF/ELSE for eligibility
+- Nested IF for existing status
+- UPDATE statement
+- Multiple conditions
+
+Expected Results:
+- 5 customers promoted to VIP
+- Updated IsVIP flag
+- Status logged
+
+SCENARIO 3 - LOAN REMINDERS:
+Purpose: Find loans due within 30 days
+Logic:
+- SELECT loans where:
+  - due_date > today
+  - due_date <= today + 30 days
+- FOR each loan:
+  - DISPLAY reminder message
+  - Calculate days until due
+  - Show urgency level
+
+Key Concepts:
+- Cursor with JOIN
+- Date calculations
+- CASE for urgency level
+- Formatted output
+- Conditional display
+
+Expected Results:
+- 8 loans found due within 30 days
+- Reminders printed
+- Urgency levels shown
+
+PL/SQL SYNTAX LEARNED:
+
+Variables:
+DECLARE
+    v_discount DECIMAL(5, 2) := 0.01;
+    v_counter INT := 0;
+
+FOR LOOP:
+FOR customer_rec IN (SELECT * FROM Customers) LOOP
+    -- Access: customer_rec.CustomerId, customer_rec.Age
+END LOOP;
+
+IF STATEMENT:
+IF customer_rec.Age > 60 THEN
+    -- code
+ELSIF customer_rec.Age > 50 THEN
+    -- code
+ELSE
+    -- code
+END IF;
+
+UPDATE:
+UPDATE Customers 
+SET IsVIP = 'Y'
+WHERE CustomerId = customer_rec.CustomerId;
+
+OUTPUT:
+DBMS_OUTPUT.PUT_LINE('Message: ' || variable);
+
+COMMIT:
+COMMIT;
+
+EXCEPTION:
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+
+PERFORMANCE INSIGHTS:
+- PL/SQL faster than individual SQL queries
+- Batch updates in loops efficient
+- Avoid unnecessary loops
+- Commit outside inner loops if possible
+
+BUSINESS LOGIC UNDERSTANDING:
+1. Age-based discounts - common in banking
+2. VIP promotions - customer retention
+3. Loan reminders - customer service
+4. All three scenarios realistic
+
+CHALLENGES FACED:
+[What was difficult?]
+
+SOLUTIONS FOUND:
+[How did I solve them?]
+
+INTERESTING INSIGHTS:
+- PL/SQL is powerful for batch operations
+- Nested loops are common
+- DBMS_OUTPUT useful for debugging
+- Exception handling is important
+
+PRODUCTION CONSIDERATIONS:
+1. Always use COMMIT inside TRY
+2. Use ROLLBACK on error
+3. Log all operations
+4. Validate data before operations
+5. Monitor loop iterations
+6. Handle exceptions properly
+7. Test with sample data first
+
+REAL-WORLD APPLICATIONS:
+1. Banking:
+   - Interest adjustments
+   - Customer classifications
+   - Loan management
+   
+2. E-commerce:
+   - Order processing
+   - Inventory updates
+   - Customer promotions
+   
+3. HR:
+   - Salary calculations
+   - Benefit eligibility
+   - Leave management
+
+FILES CREATED:
+1. 1_create_tables.sql - Database schema
+2. 2_insert_sample_data.sql - Sample data
+3. 3_scenario1_age_discount.sql - Scenario 1
+4. 4_scenario2_vip_promotion.sql - Scenario 2
+5. 5_scenario3_loan_reminders.sql - Scenario 3
+6. 6_complete_solution.sql - All scenarios
+7. README.md - Documentation
+8. notes.txt - These notes
+
+CONFIDENCE LEVEL: [Rate 1-10]
+
+COMPARED TO PREVIOUS EXERCISES:
+- Java exercises: Used loops and conditionals
+- PL/SQL exercises: Similar logic, different language
+- Now using database-specific features
+- Working directly with database records
+
+NEXT STEPS:
+- Practice more PL/SQL blocks
+- Exercise 3: Stored Procedures
+- Learn about packages
+- Understand triggers
+- Complete Module 3
+
+LEARNING RESOURCES USED:
+- Handbook section on PL/SQL
+- Oracle documentation
+- YouTube tutorials
+- Online practice environments
+
+KEY TAKEAWAYS:
+1. PL/SQL powerful for batch operations
+2. Control structures essential for logic
+3. Loops iterate through database records
+4. Conditions determine actions
+5. Updates can be done in loops
+6. Always COMMIT or ROLLBACK
+7. DBMS_OUTPUT for debugging/output
+8. Exception handling is important
+9. Nested loops common in real scenarios
+10. Business logic can be complex
+
+UNDERSTANDING LEVEL: [Beginner/Intermediate/Advanced]
+
+DIFFERENCES FROM JAVA:
+Java: Works on client side, loops in memory
+PL/SQL: Works on server side, loops in database
+Java: Fetch data, process, update
+PL/SQL: Process and update in database
+
+SIMILARITIES:
+Both have IF/ELSE statements
+Both have loops (FOR, WHILE)
+Both can update multiple records
+Both need error handling
+Both have variables and data types
+
+NEXT EXERCISE:
+Exercise 3: Stored Procedures
+- Wrap PL/SQL in reusable procedures
+- Call from applications
+- Parameter passing
+- Return values

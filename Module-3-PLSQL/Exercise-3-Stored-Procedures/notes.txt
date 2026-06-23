@@ -1,0 +1,334 @@
+EXERCISE 3: PL/SQL STORED PROCEDURES - PERSONAL NOTES
+=======================================================
+
+Date Started: [Your Date]
+Date Completed: [Your Date]
+
+KEY CONCEPTS LEARNED:
+1. Stored Procedures - Named PL/SQL blocks stored in database
+2. Parameters - IN, OUT, IN OUT
+3. Error handling - RAISE_APPLICATION_ERROR
+4. Transaction control - COMMIT, ROLLBACK
+5. Reusability - Write once, call many times
+6. Performance - Pre-compiled on server
+7. Encapsulation - Hide complex logic
+8. Audit trails - Record transactions
+
+STORED PROCEDURE BASICS:
+- Named block of PL/SQL code
+- Stored in database
+- Can be called multiple times
+- Pre-compiled and optimized
+- More secure than raw SQL
+- Can have parameters
+- Can raise errors
+
+SYNTAX:
+CREATE OR REPLACE PROCEDURE name (params) IS
+    v_variable datatype;
+BEGIN
+    -- code
+    COMMIT;
+EXCEPTION
+    WHEN OTHERS THEN
+        ROLLBACK;
+END name;
+/
+
+PARAMETER TYPES:
+IN      - Input (read-only)
+OUT     - Output (write-only)
+IN OUT  - Both input and output
+
+SCENARIO 1 - PROCESS MONTHLY INTEREST:
+Purpose: Calculate and apply interest to savings accounts
+Logic:
+- FOR each savings account:
+  - Calculate interest (balance × rate)
+  - Update balance
+  - Record transaction
+  - COMMIT
+
+Example:
+Account Balance: $50,000
+Interest Rate: 1.5%
+Interest Amount: $750
+New Balance: $50,750
+
+Key Concepts:
+- FOR LOOP with cursor
+- Calculations
+- INSERT into Transactions
+- DBMS_OUTPUT for display
+
+SCENARIO 2 - EMPLOYEE BONUS:
+Purpose: Update salary with bonus percentage
+Parameters:
+- p_department_id - Which department
+- p_bonus_percentage - Bonus % to apply
+
+Logic:
+- Validate parameters
+- Get department name
+- FOR each employee in department:
+  - Calculate bonus
+  - Update salary
+  - COMMIT
+
+Example:
+Department: IT (ID: 1)
+Bonus: 10%
+Employee: John Smith
+  Old Salary: $75,000
+  Bonus: $7,500
+  New Salary: $82,500
+
+Key Concepts:
+- Input parameters
+- Parameter validation
+- Error handling
+- RAISE_APPLICATION_ERROR
+- Department lookup
+
+SCENARIO 3 - TRANSFER FUNDS:
+Purpose: Move money between accounts with validation
+Parameters:
+- p_from_account_id - Source account
+- p_to_account_id - Destination account
+- p_amount - Amount to transfer
+
+Validations:
+1. Accounts exist
+2. Source has sufficient balance
+3. Amount > 0
+4. Not same account
+5. Parameters not null
+
+Logic:
+- Validate all conditions
+- Check balance
+- Deduct from source
+- Add to destination
+- Record transaction
+- COMMIT or ROLLBACK
+
+Error Handling:
+- Insufficient balance
+- Account not found
+- Invalid parameters
+- Two-phase update (deduct & add)
+
+Key Concepts:
+- Multiple validations
+- RAISE_APPLICATION_ERROR with custom messages
+- Transaction rollback
+- Error handling
+- Atomic operations (both succeed or both fail)
+
+ADVANTAGES OF STORED PROCEDURES:
+1. Reusability
+   - Write once, use everywhere
+   - Consistent logic across applications
+
+2. Performance
+   - Pre-compiled on server
+   - Faster than individual SQL statements
+   - Network traffic reduced
+
+3. Security
+   - Users call procedure, not raw SQL
+   - Can grant procedure access without table access
+   - Hide implementation details
+
+4. Consistency
+   - Same logic everywhere
+   - Changes automatically propagate
+   - Prevents custom implementations
+
+5. Maintainability
+   - Update in one place
+   - All applications benefit
+   - Easier to test
+
+ERROR HANDLING:
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        -- Handle when no rows found
+    WHEN TOO_MANY_ROWS THEN
+        -- Handle when too many rows
+    WHEN OTHERS THEN
+        -- Catch all errors
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+END;
+
+RAISE_APPLICATION_ERROR:
+RAISE_APPLICATION_ERROR(-20001, 'Insufficient balance');
+
+- Negative error number: -20001 to -20999
+- Custom error message
+- User sees error in exception block
+
+TRANSACTIONS:
+COMMIT   - Save all changes
+ROLLBACK - Undo all changes
+
+Best practice: COMMIT after all updates successful
+
+TESTING:
+BEGIN
+    ProcessMonthlyInterest();
+END;
+/
+
+BEGIN
+    UpdateEmployeeBonus(1, 10);
+END;
+/
+
+BEGIN
+    TransferFunds(1001, 1003, 10000);
+EXCEPTION
+    WHEN OTHERS THEN
+        NULL;  -- Error already displayed
+END;
+/
+
+PRODUCTION CONSIDERATIONS:
+1. Always validate inputs
+2. Handle errors gracefully
+3. COMMIT only when successful
+4. Log all transactions
+5. Monitor performance
+6. Use sequences for IDs
+7. Create audit tables
+8. Grant minimal permissions
+
+REAL-WORLD USAGE:
+Banking:
+- Monthly interest processing
+- Fee calculations
+- Fund transfers
+- Account statements
+
+HR:
+- Salary calculations
+- Bonus distributions
+- Tax calculations
+- Leave updates
+
+E-commerce:
+- Order processing
+- Inventory updates
+- Payment processing
+- Loyalty points
+
+Data Warehouse:
+- ETL operations
+- Aggregations
+- Fact/dimension loads
+
+CHALLENGES FACED:
+[What was difficult?]
+
+SOLUTIONS FOUND:
+[How did I solve them?]
+
+CONFIDENCE LEVEL: [Rate 1-10]
+
+DIFFERENCES FROM EXERCISE 1:
+Exercise 1: Control Structures
+- Scripts that run once
+- Logic with IF/LOOP/CURSOR
+- Direct updates
+
+Exercise 3: Stored Procedures
+- Named procedures stored in database
+- Can be called multiple times
+- Reusable and maintainable
+- More secure
+- Better performance
+
+COMPARED TO JAVA METHODS:
+Similarities:
+- Both are reusable blocks
+- Both have parameters
+- Both can return values
+- Both have error handling
+
+Differences:
+Java: Client-side, memory-based
+PL/SQL: Server-side, database-based
+Java: Compiles to bytecode
+PL/SQL: Compiles to database code
+Java: Called from application
+PL/SQL: Called from SQL/application
+
+NEXT STEPS:
+- Practice more stored procedures
+- Learn about packages
+- Study triggers
+- Understand views
+- Complete Module 3
+
+LEARNING RESOURCES USED:
+- Handbook section on Stored Procedures
+- Oracle documentation
+- YouTube tutorials
+- Online Oracle environments
+- Practice scripts
+
+KEY TAKEAWAYS:
+1. Stored procedures are reusable named blocks
+2. Pre-compiled and optimized on server
+3. More secure than raw SQL
+4. Can have multiple parameters (IN, OUT, IN OUT)
+5. Error handling with EXCEPTION
+6. Custom errors with RAISE_APPLICATION_ERROR
+7. Transaction control with COMMIT/ROLLBACK
+8. Audit trails with logging tables
+9. Used in production banking systems
+10. Essential for large-scale applications
+
+UNDERSTANDING LEVEL: [Beginner/Intermediate/Advanced]
+
+NEXT EXERCISE:
+After stored procedures, move to:
+- Packages (group related procedures)
+- Triggers (automatic reactions to events)
+- Functions (procedures that return values)
+- Views (virtual tables)
+
+INTERESTING INSIGHTS:
+- Procedures run on database server
+- Much faster for bulk operations
+- Security through encapsulation
+- Real banking systems use these heavily
+- Enterprise applications rely on procedures
+
+TIME INVESTMENT:
+Understanding: [X] hours
+Coding: [X] hours
+Testing: [X] hours
+Documentation: [X] hours
+Total: [X] hours
+
+CERTIFICATION/INTERVIEW TOPICS:
+- When to use stored procedures
+- Parameter passing
+- Error handling
+- Transaction control
+- Security implications
+- Performance benefits
+- Real-world examples
+
+FILES CREATED:
+1. 1_create_tables.sql - Database schema
+2. 2_insert_sample_data.sql - Sample data
+3. 3_scenario1_monthly_interest.sql - Interest processing
+4. 4_scenario2_employee_bonus.sql - Employee bonuses
+5. 5_scenario3_transfer_funds.sql - Fund transfers
+6. 6_test_all_procedures.sql - Complete test
+7. README.md - Documentation
+8. notes.txt - These notes
+
+STATUS: ✅ EXERCISE 3 COMPLETE
