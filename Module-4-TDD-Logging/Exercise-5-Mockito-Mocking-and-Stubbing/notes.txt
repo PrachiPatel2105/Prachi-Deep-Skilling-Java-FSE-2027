@@ -1,0 +1,307 @@
+EXERCISE 5: MOCKITO - MOCKING AND STUBBING - PERSONAL NOTES
+===========================================================
+
+Date Completed: [Your Date]
+Time Taken: [Your Time]
+
+WHAT IS MOCKITO?
+================
+- Framework for creating mock objects
+- Used for unit testing
+- Isolates code under test
+- Controls external dependencies
+- Makes tests fast and reliable
+
+WHY USE MOCKITO?
+================
+1. Test code with external dependencies
+2. Avoid calling real APIs in tests
+3. Control what dependencies return
+4. Test error scenarios easily
+5. Make tests fast (no network calls)
+6. Isolate unit under test
+
+MOCKITO CONCEPTS:
+
+1. MOCK (mock())
+   - Creates a fake object
+   - Behaves like real object
+   - Can be controlled in test
+   
+   Example:
+   ExternalApi mockApi = mock(ExternalApi.class);
+
+2. STUB (when().thenReturn())
+   - Configure mock's behavior
+   - Specify what method returns
+   - Set return values for specific inputs
+   
+   Example:
+   when(mockApi.getData()).thenReturn("Mock Data");
+
+3. VERIFY (verify())
+   - Confirm method was called
+   - Check if mock was used
+   - Verify interactions
+   
+   Example:
+   verify(mockApi).getData();
+
+4. TIMES (verify(..., times(n)))
+   - Verify call count
+   - Check exact number of calls
+   
+   Example:
+   verify(mockApi, times(3)).getData();
+
+5. NEVER (never())
+   - Verify method NOT called
+   - Ensure method wasn't invoked
+   
+   Example:
+   verify(mockApi, never()).getData();
+
+CLASSES CREATED:
+
+1. ExternalApi (Interface)
+   - Represents external API
+   - Has methods that will be mocked
+   - Methods:
+     * getData()
+     * getUserData(userId)
+     * getBalance(accountId)
+     * sendData(data)
+
+2. MyService (Class)
+   - Depends on ExternalApi
+   - Uses external API methods
+   - Methods:
+     * fetchData()
+     * getUserInfo(userId)
+     * hasSufficientBalance(accountId, amount)
+     * processTransaction(data)
+
+3. MyServiceTest (Test Class)
+   - Tests MyService
+   - Uses Mockito to mock ExternalApi
+   - 9 test methods
+
+TEST CASES CREATED:
+
+1. testFetchDataWithMock()
+   - Simple mock and stub
+   - Return string value
+   - Verify result matches
+
+2. testGetUserInfoWithMock()
+   - Mock with parameters
+   - Pass argument to stubbed method
+   - Verify parameter handling
+
+3. testSufficientBalanceWithMock()
+   - Return double value
+   - Test business logic
+   - Positive case (has balance)
+
+4. testInsufficientBalanceWithMock()
+   - Return double value
+   - Test business logic
+   - Negative case (no balance)
+
+5. testSuccessfulTransactionWithMock()
+   - Return boolean true
+   - Test success scenario
+   - Verify success path
+
+6. testFailedTransactionWithMock()
+   - Return boolean false
+   - Test failure scenario
+   - Verify failure handling
+
+7. testVerifyMockCalled()
+   - Use verify() to confirm call
+   - Check method invocation
+   - Basic verification
+
+8. testVerifyMockCalledTimes()
+   - Verify exact call count
+   - Call method 3 times
+   - Verify with times(3)
+
+9. testVerifyMockNeverCalled()
+   - Verify method NOT called
+   - Don't invoke method
+   - Verify with never()
+
+TEST RESULTS: 9/9 PASSED ✅
+
+MOCKITO METHODS USED:
+
+mock()
+- Creates mock object
+- Usage: mock(Class.class)
+- Returns mock instance
+
+when()
+- Starts stubbing configuration
+- Usage: when(mock.method())
+- Chainable with thenReturn()
+
+thenReturn()
+- Specify return value
+- Usage: when(...).thenReturn(value)
+- Called after when()
+
+verify()
+- Verify method was called
+- Usage: verify(mock).method()
+- Can be combined with times()
+
+times()
+- Verify exact call count
+- Usage: verify(mock, times(n))
+- n = number of times
+
+never()
+- Verify method NOT called
+- Usage: verify(mock, never())
+- Equivalent to times(0)
+
+MOCKITO DEPENDENCY:
+
+Added to pom.xml:
+<dependency>
+    <groupId>org.mockito</groupId>
+    <artifactId>mockito-core</artifactId>
+    <version>5.2.0</version>
+    <scope>test</scope>
+</dependency>
+
+BENEFITS OF MOCKING:
+
+1. Speed
+   - No real API calls
+   - Tests run instantly
+   - No network delay
+
+2. Control
+   - Configure return values
+   - Test any scenario
+   - Control behavior completely
+
+3. Isolation
+   - Test code in isolation
+   - Don't depend on external services
+   - Focus on one unit
+
+4. Error Testing
+   - Simulate API failures easily
+   - Test error handling
+   - No real errors needed
+
+5. Reliability
+   - Tests don't fail due to network
+   - Not dependent on API availability
+   - Repeatable results
+
+REAL-WORLD APPLICATIONS:
+
+Banking System:
+- Mock external payment APIs
+- Mock account databases
+- Test transaction processing
+- Test balance checking
+
+E-commerce:
+- Mock shipping service
+- Mock payment gateway
+- Mock inventory system
+- Test order processing
+
+Social Media:
+- Mock user database
+- Mock email service
+- Mock notification API
+- Test post creation
+
+Healthcare:
+- Mock patient database
+- Mock appointment system
+- Mock billing service
+- Test patient records
+
+COMPARISON: WITHOUT vs WITH MOCKS
+
+WITHOUT MOCKS:
+@Test
+public void test() {
+    ExternalApi api = new RealApi(); // Real API!
+    MyService service = new MyService(api);
+    String result = service.fetchData();
+    // Problems:
+    // - Slow (network call)
+    // - Network dependent
+    // - Can't test errors easily
+}
+
+WITH MOCKS:
+@Test
+public void test() {
+    ExternalApi mockApi = mock(ExternalApi.class); // Fake!
+    when(mockApi.getData()).thenReturn("Mock");
+    MyService service = new MyService(mockApi);
+    String result = service.fetchData();
+    // Benefits:
+    // - Fast (no network)
+    // - Always reliable
+    // - Easy error testing
+    // - Fully controlled
+}
+
+CONFIDENCE LEVEL: [Rate 1-10]
+
+WHAT I FOUND INTERESTING:
+- How mock() creates fake objects
+- when().thenReturn() configuration
+- verify() to confirm interactions
+- times() for call count verification
+- How mocks isolate tests
+
+CHALLENGES FACED:
+- Understanding mock vs real objects
+- when() syntax at first
+- verify() for interactions
+- times() for counting calls
+
+SOLUTIONS:
+- Practiced with examples
+- Understood mock creation
+- Learned verification methods
+- Practiced all verification types
+
+FILES CREATED:
+1. src/main/java/com/bank/ExternalApi.java
+2. src/main/java/com/bank/MyService.java
+3. src/test/java/com/bank/MyServiceTest.java
+4. README.md
+5. notes.txt
+
+KEY TAKEAWAYS:
+1. mock() creates fake objects
+2. when().thenReturn() stubs behavior
+3. verify() confirms method calls
+4. times() verifies call count
+5. never() verifies NOT called
+6. Mocks isolate tests
+7. No real API calls in tests
+8. Tests are faster with mocks
+9. Error testing becomes easy
+10. Fully controllable behavior
+
+NEXT EXERCISES:
+- Mockito Exercise 2: Verifying Interactions
+- Mockito Exercise 3: Argument Matchers
+- SLF4J: Logging Framework
+- Spring Core: Dependency Injection
+
+STATUS: ✅ EXERCISE 5 COMPLETE (MOCKITO 1)

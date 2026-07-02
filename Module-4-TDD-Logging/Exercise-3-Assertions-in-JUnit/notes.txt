@@ -1,0 +1,169 @@
+EXERCISE 3: ASSERTIONS IN JUNIT - PERSONAL NOTES
+================================================
+
+Date Completed: [Your Date]
+Time Taken: [Your Time]
+
+KEY CONCEPTS LEARNED:
+1. assertEquals() - Check value equality
+2. assertTrue() / assertFalse() - Boolean conditions
+3. assertNull() / assertNotNull() - Null checks
+4. assertSame() / assertNotSame() - Object identity
+5. assertArrayEquals() - Array comparison
+6. fail() - Force test failure
+7. Assertion messages - Descriptive error reporting
+
+JUNIT ASSERTIONS TESTED:
+
+1. assertEquals()
+   - Used for comparing values
+   - Works with int, String, double, etc
+   - Delta parameter for floating point precision
+   - Example: assertEquals(8, 5+3)
+
+2. assertTrue() / assertFalse()
+   - Check boolean conditions
+   - assertTrue() passes if condition is true
+   - assertFalse() passes if condition is false
+   - Example: assertTrue(5 > 3)
+
+3. assertNull() / assertNotNull()
+   - Check if object is null or not
+   - assertNull() for null references
+   - assertNotNull() for non-null objects
+   - Example: assertNotNull(user)
+
+4. assertSame() / assertNotSame()
+   - Check object identity (reference, not value)
+   - assertSame() - same instance
+   - assertNotSame() - different instances
+   - Example: assertSame(obj1, obj2)
+
+5. assertArrayEquals()
+   - Compare array contents
+   - Works with int[], String[], double[], etc
+   - Delta parameter for double arrays
+   - Example: assertArrayEquals(expected, actual)
+
+6. fail()
+   - Force test to fail
+   - Used to mark unimplemented code
+   - Example: fail("Not yet implemented")
+
+TEST CLASSES CREATED:
+
+1. AssertionsTest (10 test methods)
+   ✓ testAssertEquals - Equality testing
+   ✓ testAssertTrue - Boolean true
+   ✓ testAssertFalse - Boolean false
+   ✓ testAssertNull - Null references
+   ✓ testAssertNotNull - Non-null objects
+   ✓ testAssertSame - Same instance
+   ✓ testAssertNotSame - Different instances
+   ✓ testAssertArrayEquals - Array equality
+   ✓ testMultipleAssertions - Multiple checks
+   ✓ testFailMethod - fail() usage
+
+2. AssertionComparisonTest (5 test methods)
+   ✓ testEqualsVsTrue - When to use which
+   ✓ testSpecificAssertions - Being specific
+   ✓ testNullChecks - Null validation
+   ✓ testUserValidation - Real-world example
+   ✓ testArrayValidation - Array testing
+
+TOTAL TESTS: 15
+ALL PASSED: ✅ (100% success rate)
+
+BEST PRACTICES LEARNED:
+
+1. Use Specific Assertions
+   GOOD: assertTrue("Value > 0", value > 0)
+   BAD: assertEquals(true, value > 0)
+
+2. Include Descriptive Messages
+   GOOD: assertEquals("User age", 25, age)
+   BAD: assertEquals(25, age)
+
+3. Test Both Cases
+   Positive: assertTrue("Valid", isValid(good))
+   Negative: assertFalse("Invalid", isValid(bad))
+
+4. Use Delta for Floats
+   assertEquals("PI", 3.14, pi, 0.0001)
+
+5. Keep It Clear
+   assertNotNull("User exists", user)
+
+ASSERTION SELECTION GUIDE:
+
+Use assertEquals() when:
+- Comparing values (numbers, strings)
+- Want specific error message
+- Testing equality
+
+Use assertTrue() when:
+- Testing boolean conditions
+- Checking relationships (>, <, ==)
+- More readable than assertEquals(true, condition)
+
+Use assertNull() when:
+- Checking for null references
+- Validating optional values
+- Better than assertEquals(null, obj)
+
+Use assertSame() when:
+- Testing object identity
+- Checking if same instance
+- Not just value equality
+
+Use assertArrayEquals() when:
+- Comparing arrays
+- Need to verify all elements
+- More readable than assertEquals(arr1, arr2)
+
+CONFIDENCE LEVEL: [Rate 1-10]
+
+WHAT I FOUND INTERESTING:
+- How assertEquals provides better error messages
+- The difference between assertSame and assertEquals
+- Delta parameter for floating point precision
+- Multiple assertions in single test
+
+CHALLENGES FACED:
+- Understanding assertEquals vs assertTrue differences
+- When to use assertSame vs assertEquals
+
+SOLUTIONS:
+- Practiced with multiple examples
+- Understood reference vs value comparison
+
+REAL-WORLD APPLICATIONS:
+1. Banking: Validating account balances
+2. E-commerce: Checking order totals
+3. HR: Validating employee data
+4. Data validation: User input checks
+
+FILES CREATED:
+1. src/test/java/com/bank/AssertionsTest.java
+2. src/test/java/com/bank/AssertionComparisonTest.java
+3. README.md
+4. notes.txt
+
+KEY TAKEAWAYS:
+1. Use specific assertions for clarity
+2. Include descriptive messages
+3. Test both positive and negative cases
+4. Use delta for floating point
+5. Keep assertions simple and clear
+6. assertEquals() for values
+7. assertTrue() for conditions
+8. assertNull() for null checks
+9. assertSame() for object identity
+10. assertArrayEquals() for arrays
+
+NEXT EXERCISES:
+- Exercise 4: AAA Pattern
+- Test Fixtures with @Before/@After
+- Mockito basics
+
+STATUS: ✅ EXERCISE 3 COMPLETE

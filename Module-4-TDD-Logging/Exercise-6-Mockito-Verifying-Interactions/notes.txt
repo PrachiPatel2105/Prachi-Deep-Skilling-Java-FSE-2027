@@ -1,0 +1,259 @@
+EXERCISE 6: MOCKITO - VERIFYING INTERACTIONS - PERSONAL NOTES
+=============================================================
+
+Date Completed: [Your Date]
+Time Taken: [Your Time]
+
+WHAT IS VERIFYING INTERACTIONS?
+================================
+- Confirming that mock methods were called
+- Checking arguments passed to methods
+- Verifying order of method calls
+- Ensuring no unexpected calls made
+
+WHY VERIFY INTERACTIONS?
+========================
+1. Ensure correct data is passed
+2. Verify workflow sequence
+3. Test integration between components
+4. Validate API usage
+
+MOCKITO VERIFICATION CONCEPTS:
+
+1. VERIFY WITH ARGUMENTS
+   verify(mock).method(argument);
+   - Checks method called with exact argument
+   - Verifies data passed correctly
+   
+   Example:
+   verify(service).updateBalance("ACC123", 1000.0);
+
+2. ARGUMENT CAPTOR
+   ArgumentCaptor.forClass(Type.class)
+   - Captures actual argument value
+   - Inspect captured value in detail
+   - Verify complex objects
+   
+   Example:
+   ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
+   verify(service).method(captor.capture());
+   String actual = captor.getValue();
+
+3. INORDER VERIFICATION
+   InOrder inOrder = inOrder(mock);
+   inOrder.verify(mock).methodA();
+   inOrder.verify(mock).methodB();
+   - Verify execution order
+   - Important for workflows
+   
+   Example:
+   InOrder inOrder = inOrder(service);
+   inOrder.verify(service).log(...);
+   inOrder.verify(service).process(...);
+   inOrder.verify(service).send(...);
+
+4. VERIFY NO MORE INTERACTIONS
+   verifyNoMoreInteractions(mock);
+   - Ensure only expected calls made
+   - Prevent unexpected side effects
+   - Comprehensive verification
+   
+   Example:
+   verify(service).expectedMethod();
+   verifyNoMoreInteractions(service);
+
+5. VERIFY WITH ARGUMENT MATCHERS
+   verify(mock).method(anyString());
+   - Match any argument
+   - More flexible verification
+   - Use when exact value irrelevant
+   
+   Examples:
+   - anyString() - any string
+   - anyInt() - any integer
+   - any() - any object
+   - eq(value) - exact match
+
+CLASSES CREATED:
+
+1. PaymentService (Interface)
+   Methods:
+   - processPayment(accountId, amount)
+   - sendConfirmation(accountId, txnId, email)
+   - logPaymentAttempt(accountId, amount)
+   - updateBalance(accountId, amount)
+
+2. PaymentProcessor (Class)
+   Methods:
+   - completePayment(accountId, amount, email)
+   - processMultiplePayments(accountId, amounts)
+   - refundPayment(accountId, transactionId, amount)
+
+3. PaymentProcessorTest (Test Class)
+   9 test methods for different verification scenarios
+
+TEST CASES CREATED:
+
+1. testVerifyMethodWithStringArgument()
+   - Verify string argument
+   - Exact string matching
+   - logPaymentAttempt("ACC123", 1000.0)
+
+2. testVerifyMethodWithDoubleArgument()
+   - Verify double/decimal argument
+   - updateBalance("ACC123", 5000.50)
+
+3. testVerifyMethodWithMultipleArguments()
+   - Verify method with 3+ arguments
+   - sendConfirmation(accountId, txnId, email)
+
+4. testCaptureArgumentsWithArgumentCaptor()
+   - Use ArgumentCaptor to capture
+   - Inspect captured value
+   - Assert on captured data
+
+5. testVerifyInteractionOrder()
+   - Use InOrder to verify sequence
+   - Pay: log → process → update → send
+   - Critical for workflows
+
+6. testVerifyMethodNeverCalledWithArgument()
+   - Verify method NOT called with arg
+   - verify(mock, never()).method(arg)
+
+7. testVerifyMultipleCallsWithDifferentArguments()
+   - Verify same method called multiple times
+   - Different arguments each time
+   - times(3) for call count
+
+8. testVerifyRefundWithNegativeAmount()
+   - Verify with negative number
+   - updateBalance(accountId, -500.0)
+
+9. testVerifyNoMoreInteractions()
+   - Verify no other calls made
+   - Only expected interactions occur
+   - Comprehensive test
+
+TEST RESULTS: 9/9 PASSED ✅
+
+VERIFICATION METHODS LEARNED:
+
+verify(mock).method(arg)
+- Basic argument verification
+- Exact argument matching
+
+verify(mock, times(n)).method(arg)
+- Verify call count with argument
+- Called exactly n times
+
+verify(mock, never()).method(arg)
+- Verify never called with argument
+- Opposite of normal verify
+
+InOrder inOrder = inOrder(mock)
+inOrder.verify(mock).methodA()
+inOrder.verify(mock).methodB()
+- Verify method call sequence
+- Critical for workflows
+- Ensures order is maintained
+
+ArgumentCaptor.forClass(Type.class)
+- Capture argument passed
+- Extract actual value
+- Assert on captured value
+
+verifyNoMoreInteractions(mock)
+- Verify no unexpected calls
+- Only expected interactions
+- Comprehensive validation
+
+ARGUMENT MATCHERS:
+
+anyString()     - any string argument
+anyInt()        - any int argument
+anyDouble()     - any double argument
+any()           - any object argument
+eq(value)       - exact value match
+argThat(pred)   - argument matches predicate
+
+REAL-WORLD USE CASES:
+
+Banking:
+- Verify payment order: log → process → update → confirm
+- Ensure correct account ID used
+- Verify confirmation sent to correct email
+- Log all payment attempts
+
+E-commerce:
+- Verify order workflow order
+- Ensure payment processed correctly
+- Check notification sent
+- Log inventory changes
+
+Healthcare:
+- Verify medical records updated
+- Ensure doctor notified
+- Check patient confirmed
+- Log all interactions
+
+CONFIDENCE LEVEL: [Rate 1-10]
+
+WHAT I FOUND INTERESTING:
+- How ArgumentCaptor inspects arguments
+- InOrder for workflow verification
+- verifyNoMoreInteractions safety
+- Complex argument verification
+
+CHALLENGES FACED:
+- Understanding ArgumentCaptor syntax
+- Using InOrder for sequences
+- Multiple argument verification
+- Matching exact vs flexible args
+
+SOLUTIONS:
+- Practiced with examples
+- Understood captor flow
+- Learned argument matching
+- Practiced verification patterns
+
+FILES CREATED:
+1. src/main/java/com/bank/PaymentService.java
+2. src/main/java/com/bank/PaymentProcessor.java
+3. src/test/java/com/bank/PaymentProcessorTest.java
+4. README.md
+5. notes.txt
+
+KEY TAKEAWAYS:
+1. verify() checks method was called
+2. verify(mock, times(n)) counts calls
+3. ArgumentCaptor captures arguments
+4. InOrder verifies call sequence
+5. Never() verifies NOT called
+6. verifyNoMoreInteractions prevents surprises
+7. Argument matchers provide flexibility
+8. Verify both success and error paths
+9. Check data passed between components
+10. Workflows must execute in order
+
+DIFFERENCES FROM EXERCISE 5:
+
+Exercise 5 (Mocking & Stubbing):
+- Focus on mock creation
+- Stub return values
+- Simple verify() calls
+- Basic method verification
+
+Exercise 6 (Verifying Interactions):
+- Focus on verifying arguments
+- Capture and inspect arguments
+- Verify call order
+- Complex interaction validation
+
+NEXT EXERCISES:
+- Exercise 7: Argument Matchers
+- SLF4J: Logging Framework
+- Spring Core: Dependency Injection
+- Spring Data JPA
+
+STATUS: ✅ EXERCISE 6 COMPLETE (MOCKITO 2)
