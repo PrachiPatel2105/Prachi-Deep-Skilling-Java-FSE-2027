@@ -1,0 +1,70 @@
+2026-07-02 16:13:14.822 [main] INFO  com.bank.LoggingExample - === Demonstrating All Logging Levels ===
+2026-07-02 16:13:14.825 [main] DEBUG com.bank.LoggingExample - This is a DEBUG level message
+2026-07-02 16:13:14.825 [main] DEBUG com.bank.LoggingExample - Debug: Application started with parameters
+2026-07-02 16:13:14.825 [main] INFO  com.bank.LoggingExample - This is an INFO level message (default level)
+2026-07-02 16:13:14.825 [main] INFO  com.bank.LoggingExample - Application initialized successfully
+2026-07-02 16:13:14.826 [main] INFO  com.bank.LoggingExample - User logged in: john_doe
+2026-07-02 16:13:14.826 [main] WARN  com.bank.LoggingExample - This is a WARN level message
+2026-07-02 16:13:14.826 [main] WARN  com.bank.LoggingExample - Warning: Low disk space detected
+2026-07-02 16:13:14.826 [main] WARN  com.bank.LoggingExample - Warning: Deprecated method being used
+2026-07-02 16:13:14.827 [main] ERROR com.bank.LoggingExample - This is an ERROR level message
+2026-07-02 16:13:14.827 [main] ERROR com.bank.LoggingExample - Error: Failed to connect to database
+2026-07-02 16:13:14.827 [main] ERROR com.bank.LoggingExample - Error: Invalid user input
+2026-07-02 16:13:14.827 [main] INFO  com.bank.LoggingExample - === Demonstrating Exception Logging ===
+2026-07-02 16:13:14.831 [main] ERROR com.bank.LoggingExample - Error: Division by zero occurred
+java.lang.ArithmeticException: / by zero
+	at com.bank.LoggingExample.demonstrateExceptionLogging(LoggingExample.java:73)
+	at com.bank.LoggingExample.main(LoggingExample.java:28)
+2026-07-02 16:13:14.831 [main] ERROR com.bank.LoggingExample - Error: Array index out of bounds
+java.lang.ArrayIndexOutOfBoundsException: Index 10 out of bounds for length 3
+	at com.bank.LoggingExample.demonstrateExceptionLogging(LoggingExample.java:81)
+	at com.bank.LoggingExample.main(LoggingExample.java:28)
+2026-07-02 16:13:14.831 [main] WARN  com.bank.LoggingExample - Warning: Invalid array access attempted
+2026-07-02 16:13:14.831 [main] INFO  com.bank.LoggingExample - === Demonstrating Method Logging ===
+2026-07-02 16:13:14.832 [main] DEBUG com.bank.LoggingExample - Entering processPayment method
+2026-07-02 16:13:14.832 [main] INFO  com.bank.LoggingExample - Processing payment for account: ACC123
+2026-07-02 16:13:14.834 [main] DEBUG com.bank.LoggingExample - Payment amount: 1000.0
+2026-07-02 16:13:14.835 [main] INFO  com.bank.LoggingExample - Payment processed successfully
+2026-07-02 16:13:14.836 [main] DEBUG com.bank.LoggingExample - Exiting processPayment method
+2026-07-02 16:13:14.836 [main] DEBUG com.bank.LoggingExample - Entering validateUser method
+2026-07-02 16:13:14.836 [main] DEBUG com.bank.LoggingExample - Validating user: john_doe
+2026-07-02 16:13:14.836 [main] INFO  com.bank.LoggingExample - User validation successful: john_doe
+2026-07-02 16:13:14.836 [main] DEBUG com.bank.LoggingExample - Exiting validateUser method
+2026-07-02 16:13:52.898 [main] INFO  com.bank.BankLoggingApplication - ========== Bank Application Started ==========
+2026-07-02 16:13:52.902 [main] INFO  com.bank.BankLoggingApplication - Bank account created - Account: ACC001, Balance: $5000.0
+2026-07-02 16:13:52.903 [main] INFO  com.bank.BankLoggingApplication - Bank account created - Account: ACC002, Balance: $3000.0
+2026-07-02 16:13:52.903 [main] INFO  com.bank.BankLoggingApplication - --- Testing Deposits ---
+2026-07-02 16:13:52.904 [main] DEBUG com.bank.BankLoggingApplication - Deposit request received - Amount: $1000.0
+2026-07-02 16:13:52.904 [main] INFO  com.bank.BankLoggingApplication - Deposit successful - Account: ACC001, Amount: $1000.0, New Balance: $6000.0
+2026-07-02 16:13:52.904 [main] DEBUG com.bank.BankLoggingApplication - Current balance after deposit: $6000.0
+2026-07-02 16:13:52.904 [main] DEBUG com.bank.BankLoggingApplication - Deposit request received - Amount: $-500.0
+2026-07-02 16:13:52.904 [main] ERROR com.bank.BankLoggingApplication - Error: Deposit failed - Invalid amount: $-500.0
+2026-07-02 16:13:52.904 [main] WARN  com.bank.BankLoggingApplication - Warning: Negative or zero deposit attempted
+2026-07-02 16:13:52.904 [main] INFO  com.bank.BankLoggingApplication - 
+--- Testing Withdrawals ---
+2026-07-02 16:13:52.904 [main] DEBUG com.bank.BankLoggingApplication - Withdrawal request received - Amount: $500.0
+2026-07-02 16:13:52.905 [main] INFO  com.bank.BankLoggingApplication - Withdrawal successful - Account: ACC001, Amount: $500.0, New Balance: $5500.0
+2026-07-02 16:13:52.905 [main] DEBUG com.bank.BankLoggingApplication - Withdrawal request received - Amount: $10000.0
+2026-07-02 16:13:52.905 [main] ERROR com.bank.BankLoggingApplication - Error: Insufficient funds - Requested: $10000.0, Available: $5500.0
+2026-07-02 16:13:52.905 [main] WARN  com.bank.BankLoggingApplication - Warning: Withdrawal attempted with insufficient balance
+2026-07-02 16:13:52.905 [main] INFO  com.bank.BankLoggingApplication - 
+--- Testing Transfers ---
+2026-07-02 16:13:52.905 [main] INFO  com.bank.BankLoggingApplication - Transfer initiated - From: ACC001, To: ACC002, Amount: $2000.0
+2026-07-02 16:13:52.905 [main] DEBUG com.bank.BankLoggingApplication - Source balance before transfer: $5500.0
+2026-07-02 16:13:52.905 [main] INFO  com.bank.BankLoggingApplication - Transfer successful - From: ACC001, To: ACC002, Amount: $2000.0
+2026-07-02 16:13:52.906 [main] DEBUG com.bank.BankLoggingApplication - Source new balance: $3500.0, Recipient new balance: $5000.0
+2026-07-02 16:13:52.906 [main] INFO  com.bank.BankLoggingApplication - Transfer initiated - From: ACC001, To: ACC002, Amount: $10000.0
+2026-07-02 16:13:52.906 [main] DEBUG com.bank.BankLoggingApplication - Source balance before transfer: $3500.0
+2026-07-02 16:13:52.908 [main] ERROR com.bank.BankLoggingApplication - Transfer failed - Insufficient funds for transfer
+java.lang.IllegalArgumentException: Insufficient funds for transfer
+	at com.bank.BankLoggingApplication.transfer(BankLoggingApplication.java:85)
+	at com.bank.BankLoggingApplication.main(BankLoggingApplication.java:130)
+2026-07-02 16:13:52.909 [main] WARN  com.bank.BankLoggingApplication - Warning: Transfer operation failed for accounts ACC001 and ACC002
+2026-07-02 16:13:52.909 [main] INFO  com.bank.BankLoggingApplication - 
+--- Final Balances ---
+2026-07-02 16:13:52.909 [main] DEBUG com.bank.BankLoggingApplication - Balance inquiry - Account: ACC001, Balance: $3500.0
+2026-07-02 16:13:52.909 [main] INFO  com.bank.BankLoggingApplication - Account 1 (ACC001) - Balance: $3500.0
+2026-07-02 16:13:52.909 [main] DEBUG com.bank.BankLoggingApplication - Balance inquiry - Account: ACC002, Balance: $5000.0
+2026-07-02 16:13:52.909 [main] INFO  com.bank.BankLoggingApplication - Account 2 (ACC002) - Balance: $5000.0
+2026-07-02 16:13:52.909 [main] INFO  com.bank.BankLoggingApplication - ========== Bank Application Ended ==========
+
